@@ -1,11 +1,7 @@
-<script setup lang="ts">
-// import TheWelcome from '../components/TheWelcome.vue'
-import { Button } from '@/components/ui/button'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main>
-    <!-- <TheWelcome /> -->
-    <Button>Click me</Button>
+    <h1>INICIO TOPICOS UAGRM</h1>
   </main>
 </template>

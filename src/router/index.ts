@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import MyLayout from '@/layouts/MyLayout.vue'
-import HomeView from '../views/HomeView.vue'
+// import HomeView from '../views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
+import ChatView from '@/modules/Chat/ChatView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,7 +17,7 @@ const router = createRouter({
       path: '/',
       component: MyLayout,
       children: [
-        { path: '', component: HomeView, meta: { title: 'Inicio', requiresAuth: true } },
+        { path: '', component: ChatView, meta: { title: 'Inicio', requiresAuth: true } },
         { path: 'about', component: AboutView, meta: { title: 'Acerca de', requiresAuth: true } },
       ],
     },
