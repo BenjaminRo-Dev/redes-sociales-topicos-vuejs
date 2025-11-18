@@ -3,7 +3,7 @@ export type Rol = 'usuario' | 'asistente'
 export interface Mensaje {
     id: string
     rol: Rol
-    contenido: string
+    contenido: string | RespuestaIA
     createdAt: string
 }
 

@@ -25,58 +25,22 @@ export const useChatStore = defineStore('chat', () => {
         })
     }
 
-    function formatearRespuesta(data: unknown): string {
-        if (typeof data === 'string') return data
-
-        const respuesta = data as RespuestaIA
-
-        // Si tiene la estructura esperada de redes sociales
-        if (respuesta.tema) {
-            const iconos: Record<string, string> = {
-                facebook: '📘',
-                instagram: '📸',
-                linkedin: '💼',
-                whatsapp: '💬',
-                tiktok: '🎵'
-            }
-
-            let html = `<div style="font-family: system-ui, -apple-system, sans-serif;">
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 8px 8px 0 0; margin-bottom: 16px;">
-                    <h2 style="margin: 0; font-size: 20px; font-weight: 600;">📝 ${respuesta.tema}</h2>
-                </div>`
-
-            const redes: Array<keyof Omit<RespuestaIA, 'tema' | 'message'>> = ['facebook', 'instagram', 'linkedin', 'whatsapp', 'tiktok']
-
-            redes.forEach((red) => {
-                if (respuesta[red]) {
-                    const redData = respuesta[red]!
-                    html += `
-                    <div style="margin-bottom: 24px; padding: 16px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea;">
-                        <h3 style="margin: 0 0 12px 0; color: #333; font-size: 18px; font-weight: 600;">
-                            ${iconos[red]} ${red.charAt(0).toUpperCase() + red.slice(1)}
-                        </h3>
-                        <div style="margin-bottom: 12px;">
-                            <p style="margin: 0; color: #555; line-height: 1.6; white-space: pre-wrap;">${redData.texto}</p>
-                        </div>
-                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                            ${redData.hashtags.map((tag: string) =>
-                        `<span style="background: #e3e8ff; color: #667eea; padding: 4px 12px; border-radius: 16px; font-size: 14px; font-weight: 500;">${tag}</span>`
-                    ).join('')}
-                        </div>
-                    </div>`
-                }
-            })
-
-            html += '</div>'
-            return html
+    function formatearRespuesta(data: unknown): string | RespuestaIA {
+        if (typeof data === 'string') return data;
+        const respuestaIA = data as RespuestaIA;
+        // Si tiene la estructura de RespuestaIA, devolver el objeto
+        if (respuestaIA.tema) {
+            return respuestaIA;
         }
-
-        // Fallback para otros tipos de respuestas
-        return respuesta.message ?? JSON.stringify(data)
+        // Fallback para otros tipos de respuesta
+        return respuestaIA.message || JSON.stringify(respuestaIA);
     }
+
 
     async function sendToServer(contenido: string) {
         cargando.value = true
+        console.log(redesSociales.value);
+        // return
         try {
             const respuesta = await api.post('/chat/generar', { "prompt": contenido, "redes_sociales": redesSociales.value })
 
@@ -85,7 +49,7 @@ export const useChatStore = defineStore('chat', () => {
             mensajes.value.push({
                 id: uuidv4(),
                 rol: 'asistente',
-                contenido: textoIA,
+                contenido: textoIA, // ahora es un objeto
                 createdAt: new Date().toISOString()
             })
 
@@ -112,5 +76,3 @@ export const useChatStore = defineStore('chat', () => {
 
     return { mensajes, cargando, addLocalMessage, sendToServer, clear }
 })
-
-//Nota: se está usando `uuid`. Instálalo: `npm i uuid` y sus tipos `npm i -D @types/uuid`.
