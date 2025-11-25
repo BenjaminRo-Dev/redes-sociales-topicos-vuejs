@@ -7,13 +7,14 @@ import type { Mensaje, RespuestaIA } from '@/modules/Chat/interfaces'
 export const useChatStore = defineStore('chat', () => {
     const mensajes = ref<Mensaje[]>([])
     const cargando = ref(false)
+    const temaActual = ref<string | null>(null)
 
     const redesSociales = ref([
         "facebook",
         "instagram",
-        "linkedin",
-        "whatsapp",
-        "tiktok"
+        // "linkedin",
+        // "whatsapp",
+        // "tiktok"
     ])
 
     function addLocalMessage(contenido: string) {
@@ -46,6 +47,11 @@ export const useChatStore = defineStore('chat', () => {
 
             const textoIA = formatearRespuesta(respuesta.data)
 
+            // Si la respuesta tiene un tema y no tenemos tema actual, guardarlo
+            if (typeof textoIA === 'object' && textoIA.tema && !temaActual.value) {
+                temaActual.value = textoIA.tema
+            }
+
             mensajes.value.push({
                 id: uuidv4(),
                 rol: 'asistente',
@@ -71,8 +77,12 @@ export const useChatStore = defineStore('chat', () => {
 
     function clear() {
         mensajes.value = []
+        temaActual.value = null
     }
 
+    function setTema(tema: string | null) {
+        temaActual.value = tema
+    }
 
-    return { mensajes, cargando, addLocalMessage, sendToServer, clear }
+    return { mensajes, cargando, temaActual, addLocalMessage, sendToServer, clear, setTema }
 })
