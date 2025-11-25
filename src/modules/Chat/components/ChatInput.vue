@@ -29,7 +29,7 @@ function onSubmit() {
 
     <button :disabled="isEmpty || loading" class="btn btn-primary" type="submit">
       <span v-if="!loading">Enviar</span>
-      <span v-else>Enviando...</span>
+      <span v-else>Cargando...</span>
     </button>
   </form>
 </template>

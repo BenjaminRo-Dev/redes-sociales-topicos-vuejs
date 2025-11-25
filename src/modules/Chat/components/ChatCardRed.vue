@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { usePublicarStore } from '../stores/publicar'
+
 const props = defineProps<{
   nombreRedSocial: string
   data: { texto: string; hashtags: string[] } | null
 }>()
 
 const emit = defineEmits(['clickRed'])
+
+const publicarStore = usePublicarStore()
 
 const iconos: Record<string, string> = {
   facebook: '📘',
@@ -17,9 +21,18 @@ const iconos: Record<string, string> = {
 const icono = iconos[props.nombreRedSocial]
 const redSocial = props.nombreRedSocial.charAt(0).toUpperCase() + props.nombreRedSocial.slice(1)
 
-function clickRed() {
+async function clickRed() {
+  if (!props.data) return
+
   emit('clickRed', props.nombreRedSocial)
-  console.log(props.nombreRedSocial)
+
+  try {
+    const textoCompleto = `${props.data.texto}\n\n${props.data.hashtags.join(' ')}`
+    await publicarStore.publicarContenido(textoCompleto, props.nombreRedSocial)
+    console.log('Publicado =)', props.nombreRedSocial)
+  } catch (error) {
+    console.error('Error al publicar:', error)
+  }
 }
 </script>
 
@@ -41,9 +54,10 @@ function clickRed() {
 
     <button
       @click="clickRed"
-      class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+      :disabled="publicarStore.cargando"
+      class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
     >
-      Publicar en {{ redSocial }}
+      {{ publicarStore.cargando ? 'Publicando...' : `Publicar en ${redSocial}` }}
     </button>
   </div>
 </template>

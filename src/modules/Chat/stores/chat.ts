@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import api from '@/services/api'
 import { v4 as uuidv4 } from 'uuid'
-import type { Mensaje, RespuestaIA } from '@/modules/Chat/interfaces'
+import type { Mensaje } from '@/modules/Chat/interfaces'
+import { contenidoService } from '@/modules/Chat/services/contenidoService'
+import { temaService } from '@/services/temaService'
 
 export const useChatStore = defineStore('chat', () => {
     const mensajes = ref<Mensaje[]>([])
@@ -26,46 +27,33 @@ export const useChatStore = defineStore('chat', () => {
         })
     }
 
-    function formatearRespuesta(data: unknown): string | RespuestaIA {
-        if (typeof data === 'string') return data;
-        const respuestaIA = data as RespuestaIA;
-        // Si tiene la estructura de RespuestaIA, devolver el objeto
-        if (respuestaIA.tema) {
-            return respuestaIA;
-        }
-        // Fallback para otros tipos de respuesta
-        return respuestaIA.message || JSON.stringify(respuestaIA);
-    }
-
-
     async function sendToServer(contenido: string) {
         cargando.value = true
-        console.log(redesSociales.value);
-        // return
+
         try {
-            const respuesta = await api.post('/chat/generar', { "prompt": contenido, "redes_sociales": redesSociales.value })
+            console.log('Generando contenido...');
+            const textoIA = await contenidoService.generarContenido(contenido, redesSociales.value)
 
-            const textoIA = formatearRespuesta(respuesta.data)
-
-            // Si la respuesta tiene un tema y no tenemos tema actual, guardarlo
+            // Si la respuesta tiene un tema y no hay tema actual, guardarlo
             if (typeof textoIA === 'object' && textoIA.tema && !temaActual.value) {
+                console.log('Creando tema...');
+                await temaService.create({ nombre: textoIA.tema }).catch(console.error)
                 temaActual.value = textoIA.tema
             }
 
             mensajes.value.push({
                 id: uuidv4(),
                 rol: 'asistente',
-                contenido: textoIA, // ahora es un objeto
+                contenido: textoIA,
                 createdAt: new Date().toISOString()
             })
 
             return textoIA
         } catch (err) {
-            // Manejo simple de error
             mensajes.value.push({
                 id: uuidv4(),
                 rol: 'asistente',
-                contenido: 'Error: no se pudo obtener respuestauesta del servidor.',
+                contenido: 'Error: no se pudo obtener respuesta del servidor.',
                 createdAt: new Date().toISOString()
             })
             throw err

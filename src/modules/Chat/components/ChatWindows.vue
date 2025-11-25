@@ -15,8 +15,9 @@ function scrollToBottom() {
 }
 
 watch(
-  () => chat.mensajes.length,
+  () => chat.mensajes,
   () => scrollToBottom(),
+  { deep: true },
 )
 
 onMounted(() => scrollToBottom())
@@ -32,12 +33,12 @@ async function handleSend(text: string) {
 </script>
 
 <template>
-  <div class="flex-1 flex flex-col border rounded-lg overflow-hidden">
-    <div class="flex-1 p-4 overflow-auto" ref="scrollEl">
+  <div class="h-full flex flex-col border rounded-lg">
+    <div class="flex-1 p-4 overflow-y-auto min-h-0" ref="scrollEl">
       <MessageItem v-for="msg in chat.mensajes" :key="msg.id" :mensaje="msg" />
     </div>
 
-    <div class="p-4 border-t">
+    <div class="p-4 border-t shrink-0">
       <ChatInput @send="handleSend" :loading="chat.cargando" />
     </div>
   </div>
