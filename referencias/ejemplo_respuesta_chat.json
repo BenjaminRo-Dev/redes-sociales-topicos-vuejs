@@ -1,0 +1,59 @@
+{
+  "tema": "Día del Estudiante FICCT",
+  "prompt_imagen": "Un grupo de estudiantes universitarios sonrientes y diversos, con mochilas y laptops, celebrando el Día del Estudiante en un ambiente que sugiere un campus universitario moderno o una sala de computación. Fondo con elementos tecnológicos sutiles como código binario o circuitos integrados, colores vibrantes que reflejan alegría y energía.",
+  "prompt_video": "Video corto y dinámico para TikTok. Comienza con texto grande '¡Feliz Día del Estudiante!' con música alegre y enérgica. Rápidamente muestra clips de estudiantes de FICCT riendo, trabajando en computadoras, presentando proyectos y celebrando. Termina con el logo de FICCT y un mensaje breve '¡Sos el futuro de la tecnología!'",
+  "facebook": {
+    "texto": "¡Feliz Día del Estudiante a todos nuestros talentosos alumnos de la FICCT! 🎉 Hoy celebramos tu dedicación, esfuerzo y pasión por la tecnología. Sos el motor que impulsa la innovación y el futuro. ¡Que este día esté lleno de alegría y reconocimiento a tu invaluable labor! Gracias por elegir la FICCT para construir tus sueños. #FICCT #UAGRM #DiaDelEstudiante #EstudiantesDeComputacion #SantaCruz",
+    "hashtags": [
+      "#FICCT",
+      "#UAGRM",
+      "#DiaDelEstudiante",
+      "#EstudiantesDeComputacion",
+      "#SantaCruz",
+      "#Bolivia",
+      "#FuturoTecnologico"
+    ]
+  },
+  "instagram": {
+    "texto": "¡Feliz Día del Estudiante, cracks de la FICCT! 💻✨ Celebramos tu garra, tu ingenio y tu pasión por transformar el mundo con la tecnología. ¡Seguí brillando! ✨ #DíaDelEstudiante #FICCT #EstudiantesIT #UAGRM #Innovación #TecnologíaBoliviana",
+    "hashtags": [
+      "#DíaDelEstudiante",
+      "#FICCT",
+      "#EstudiantesIT",
+      "#UAGRM",
+      "#Innovación",
+      "#TecnologíaBoliviana",
+      "#SantaCruz"
+    ]
+  },
+  "linkedin": {
+    "texto": "En este Día del Estudiante, la Facultad de Computación (FICCT) de la UAGRM extiende un caluroso saludo a todos sus alumnos. Su compromiso, disciplina y búsqueda constante de conocimiento son pilares fundamentales para el desarrollo tecnológico de nuestra región y país. En la FICCT, formamos a los líderes y profesionales que moldearán el futuro digital. ¡Feliz Día del Estudiante! #DiadelEstudiante #FICCT #UAGRM #FormacionProfesional #IngenieriaInformatica #CienciasDeLaComputacion #DesarrolloTecnologico",
+    "hashtags": [
+      "#DiadelEstudiante",
+      "#FICCT",
+      "#UAGRM",
+      "#FormacionProfesional",
+      "#IngenieriaInformatica",
+      "#CienciasDeLaComputacion",
+      "#DesarrolloTecnologico",
+      "#Bolivia"
+    ]
+  },
+  "whatsapp": {
+    "texto": "¡Feliz Día del Estudiante a vos, que sos parte de la gran familia FICCT! 🥳 Tu esfuerzo y pasión son nuestra inspiración. ¡Que tengas un día genial! 🚀 #FICCT #DiaDelEstudiante",
+    "hashtags": ["#FICCT", "#DiaDelEstudiante"]
+  },
+  "tiktok": {
+    "texto": "¡FELIZ DÍA DEL ESTUDIANTE, FUTUROS CRACKS DE LA TECNOLOGÍA! 🤩 En la FICCT, celebramos tu talento y energía. ¡Seguí programando tus sueños! 💻✨ #FICCT #DiaDelEstudiante #UAGRM #EstudiantesDeInformatica #TechTok #Programación #SantaCruz",
+    "hashtags": [
+      "#FICCT",
+      "#DiaDelEstudiante",
+      "#UAGRM",
+      "#EstudiantesDeInformatica",
+      "#TechTok",
+      "#Programación",
+      "#SantaCruz",
+      "#Bolivia"
+    ]
+  }
+}

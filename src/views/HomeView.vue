@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import ListaConversaciones from '@/components/ListaConversaciones.vue'
 import Button from '@/components/ui/button/Button.vue'
 import VentanaChat from '@/components/VentanaChat.vue'
 
-function crearNuevoChat() {}
+function crearNuevoChat() {
+  //limpiar el chat y mostrar uno vacio
+}
 </script>
 
 <template>
