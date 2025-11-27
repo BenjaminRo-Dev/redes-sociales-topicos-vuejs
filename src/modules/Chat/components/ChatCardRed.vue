@@ -4,6 +4,8 @@ import { usePublicarStore } from '../stores/publicar'
 const props = defineProps<{
   nombreRedSocial: string
   data: { texto: string; hashtags: string[] } | null
+  imagenUrl: string | null
+  videoUrl: string | null
 }>()
 
 const emit = defineEmits(['clickRed'])
@@ -28,7 +30,11 @@ async function clickRed() {
 
   try {
     const textoCompleto = `${props.data.texto}\n\n${props.data.hashtags.join(' ')}`
-    await publicarStore.publicarContenido(textoCompleto, props.nombreRedSocial)
+
+    // Para TikTok usar video, para otras redes usar imagen
+    const mediaUrl = props.nombreRedSocial === 'tiktok' ? props.videoUrl : props.imagenUrl
+
+    await publicarStore.publicarContenido(textoCompleto, props.nombreRedSocial, mediaUrl)
     console.log('Publicado =)', props.nombreRedSocial)
   } catch (error) {
     console.error('Error al publicar:', error)

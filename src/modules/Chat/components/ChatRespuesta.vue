@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import ChatCardRed from '@/modules/Chat/components/ChatCardRed.vue'
-import type { Contenido } from '@/modules/Chat/interfaces'
+import type { RespuestaIA } from '@/modules/Chat/interfaces'
 
-defineProps<{ respuesta: Contenido }>()
+defineProps<{
+  respuesta: RespuestaIA
+  imagenUrl: string | null
+  videoUrl: string | null
+}>()
 
-const redes: Array<keyof Omit<Contenido, 'tema' | 'message'>> = [
+const redes: Array<keyof Omit<RespuestaIA, 'tema' | 'message'>> = [
   'facebook',
   'instagram',
   'linkedin',
@@ -30,6 +34,8 @@ function emitirAccion(red: string) {
       :key="red"
       :nombreRedSocial="red"
       :data="(respuesta[red] as { texto: string; hashtags: string[] } | undefined) || null"
+      :imagen-url="imagenUrl"
+      :video-url="videoUrl"
       @clickRed="emitirAccion"
     />
   </div>

@@ -13,6 +13,20 @@ const isRespuestaIA = computed(() => {
 
 const respuestaIA = computed(() => props.mensaje.contenido as RespuestaIA)
 const contenidoTexto = computed(() => props.mensaje.contenido as string)
+
+// Construir URL completa para la imagen
+const imagenUrl = computed(() => {
+  if (!props.mensaje.url_imagen) return null
+  const apiUrl = import.meta.env.VITE_API_URL_PROD || 'http://localhost:8000'
+  return `${apiUrl}/${props.mensaje.url_imagen}`
+})
+
+// Construir URL completa para el video
+const videoUrl = computed(() => {
+  if (!props.mensaje.url_video) return null
+  const apiUrl = import.meta.env.VITE_API_URL_PROD || 'http://localhost:8000'
+  return `${apiUrl}/${props.mensaje.url_video}`
+})
 </script>
 
 <template>
@@ -25,9 +39,26 @@ const contenidoTexto = computed(() => props.mensaje.contenido as string)
     </div>
 
     <div v-else class="text-left">
-      <ChatRespuesta v-if="isRespuestaIA" :respuesta="respuestaIA" />
+      <ChatRespuesta
+        v-if="isRespuestaIA"
+        :respuesta="respuestaIA"
+        :imagen-url="imagenUrl"
+        :video-url="videoUrl"
+      />
       <div v-else class="inline-block px-4 py-2 rounded-lg shadow-sm bg-surface-1">
         {{ contenidoTexto }}
+      </div>
+
+      <!-- Mostrar imagen si existe -->
+      <div v-if="imagenUrl" class="mt-3 max-w-md">
+        <img :src="imagenUrl" alt="Imagen generada" class="rounded-lg shadow-md w-full h-auto" />
+      </div>
+
+      <!-- Mostrar video si existe -->
+      <div v-if="videoUrl" class="mt-3 max-w-md">
+        <video :src="videoUrl" controls class="rounded-lg shadow-md w-full h-auto">
+          Tu navegador no soporta el elemento de video.
+        </video>
       </div>
 
       <div class="text-xs text-muted mt-1">{{ time }}</div>

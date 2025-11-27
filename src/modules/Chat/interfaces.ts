@@ -3,8 +3,10 @@ export type Rol = 'usuario' | 'asistente'
 export interface Mensaje {
     id: string
     rol: Rol
-    contenido: string | Contenido
+    contenido: string | RespuestaIA
     createdAt: string
+    url_imagen?: string
+    url_video?: string
 }
 
 export interface RedSocialContent {
@@ -12,7 +14,7 @@ export interface RedSocialContent {
     hashtags: string[]
 }
 
-export interface Contenido {
+export interface RespuestaIA {
     tema: string
     prompt_imagen: string
     prompt_video: string

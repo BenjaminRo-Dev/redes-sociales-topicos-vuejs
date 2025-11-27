@@ -1,12 +1,12 @@
 import api from "@/services/api";
-import type { Contenido } from "../interfaces";
+import type { RespuestaIA } from "../interfaces";
 
 const urlBase = "/chat/generar";
 
-function formatearRespuesta(data: unknown): string | Contenido {
+function formatearRespuesta(data: unknown): string | RespuestaIA {
     if (typeof data === 'string') return data;
-    const respuestaIA = data as Contenido;
-    // Si tiene la estructura de Contenido, devolver el objeto
+    const respuestaIA = data as RespuestaIA;
+    // Si tiene la estructura de RespuestaIA, devolver el objeto
     if (respuestaIA.tema) {
         return respuestaIA;
     }
@@ -15,7 +15,7 @@ function formatearRespuesta(data: unknown): string | Contenido {
 }
 
 export const contenidoService = {
-    async generarContenido(prompt: string, redesSociales: string[]): Promise<string | Contenido> {
+    async generarContenido(prompt: string, redesSociales: string[]): Promise<string | RespuestaIA> {
         const respuesta = await api.post(urlBase, {
             prompt,
             redes_sociales: redesSociales
