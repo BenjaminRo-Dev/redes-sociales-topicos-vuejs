@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { useConversacionStore } from '@/stores/useConversacionStore'
 import ListaConversaciones from '@/components/ListaConversaciones.vue'
 import Button from '@/components/ui/button/Button.vue'
 import VentanaChat from '@/components/VentanaChat.vue'
 
-function crearNuevoChat() {}
+const store = useConversacionStore()
+
+async function crearNuevoChat() {
+  const titulo = `Nueva Conversación ${new Date().toLocaleDateString()}`
+  await store.crearConversacion(titulo)
+}
 </script>
 
 <template>

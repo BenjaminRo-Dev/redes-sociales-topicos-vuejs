@@ -1,26 +1,34 @@
-import type { Conversaciones } from "@/interfaces/mis_interfaces";
+import type { Conversaciones, Mensaje } from "@/interfaces/mis_interfaces";
 import api from "@/services/api";
 
 const urlBase = "/conversaciones";
 
 export const conversacionService = {
     getAll() {
-        return api.get(urlBase);
+        return api.get<Conversaciones[]>(urlBase);
     },
 
-    // getById(id: number) {
-    //     return api.get(`${urlBase}/${id}`);
-    // },
+    getById(id: number) {
+        return api.get<Conversaciones>(`${urlBase}/${id}`);
+    },
 
-    // create(datos: Tema) {
-    //     return api.post(urlBase, datos);
-    // },
+    getMensajes(conversacionId: number) {
+        return api.get<Mensaje[]>(`${urlBase}/${conversacionId}/mensajes`);
+    },
 
-    // update(id: number, datos: Tema) {
-    //     return api.put(`${urlBase}/${id}`, datos);
-    // },
+    create(datos: { titulo: string }) {
+        return api.post<Conversaciones>(urlBase, datos);
+    },
 
-    // delete(id: number) {
-    //     return api.delete(`${urlBase}/${id}`);
-    // }
+    agregarMensaje(conversacionId: number, mensaje: { texto: string; redes_sociales: string[]; duracion_video?: number }) {
+        return api.post<Mensaje[]>(`${urlBase}/${conversacionId}/mensajes`, mensaje);
+    },
+
+    update(id: number, datos: { titulo: string }) {
+        return api.put<Conversaciones>(`${urlBase}/${id}`, datos);
+    },
+
+    delete(id: number) {
+        return api.delete(`${urlBase}/${id}`);
+    }
 };
